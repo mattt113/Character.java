@@ -11,8 +11,8 @@ public class WorldMaker implements Serializable {
     private ArrayList<AutoRoomAlterer> altererList;
     private ArrayList<Room> roomList;
     private Character player;
-    private GameEnd ender;
-    private Room hungyBed,emptyHall,hungyKitchen, kitchen, bed, hall, telly , fridge, livingRoom, diningRoom, wardrobeRoom, basement, abyss, balcony, space, sandwichEaten, sandwichDropped,perished, bedMirror, spookyBed, quarry;
+    private Room hungyBed,emptyHall,hungyKitchen, kitchen, bed, hall, telly , fridge, livingRoom, diningRoom, wardrobeRoom,
+            basement, balcony, space, sandwichEaten, sandwichDropped, bedMirror, spookyBed, quarry, damned, hell;
 
 
     public WorldMaker(Stage stage) {
@@ -41,15 +41,15 @@ public class WorldMaker implements Serializable {
         roomList.add(diningRoom=new Room("diningroom","there is no food","DavesDiningRoom.png"));
         roomList.add(wardrobeRoom=new Room("wardrobe","the wardrobe is filled with stuff","wardrobe.png"));
         roomList.add(basement =new Room("basement","quite dark down here","basement.png"));
-        roomList.add(abyss=new Room("abyss","the ceaseless void",""));
         roomList.add(balcony=new Room("balcony","the sky is beautiful tonight","balcony.png"));
         roomList.add(space=new Room("space","there are many stars.\n and butter!","spacebutter.png"));
         roomList.add(sandwichEaten=new Room("hooray","the sandwich is eaten!","glorybe.png"));
         roomList.add(sandwichDropped=new Room("tragedy","how could you?!","glorybegone.png"));
-        roomList.add(perished=new Room("your-dead!","you died",""));
         roomList.add(spookyBed=new Room("spookyBedroom","the air feels oppresive","bedroom-darkmirror5.png"));
-        roomList.add(bedMirror=new Room("bedmirror","a backwards land of backwords things","bedroommirrored.png"));
+        roomList.add(bedMirror=new Room("bedmirror","a backwards land of backwards things","bedroommirrored.png"));
         roomList.add(quarry=new Room("quarry","if ever you need to source copius amounts of stone","quarry.png"));
+        roomList.add(damned=new Room("damned","you overstayed your welcome and are trapped in hell eternally\nEnjoy suffering!","damned.png"));
+        roomList.add(hell=new Room("hell","oh no! the cheese is guarded","hellcheeseprotected.png"));
 
         fridge.setExit("kitchen", kitchen);
         bed.setExit("hall", hall);
@@ -70,6 +70,9 @@ public class WorldMaker implements Serializable {
         space.setExit("balcony",balcony);
         spookyBed.setExit("hall",hall);
         quarry.setExit("hall",hall);
+        bedMirror.setExit("mirror",bedMirror);
+        bedMirror.setExit("outside",hell);
+        hell.setExit("bedroom",bedMirror);
 
     }
 
@@ -83,7 +86,7 @@ public class WorldMaker implements Serializable {
 
         sandwichEaten.addItem(endItem);
         sandwichDropped.addItem(endItem);
-        perished.addItem(endItem);
+        damned.addItem(endItem);
 
         ItemHoldable ham=new SandwichComponent("ham","the ham");
         ItemHoldable cheese=new SandwichComponent("cheese","the cheese");
@@ -128,7 +131,6 @@ public class WorldMaker implements Serializable {
         darkFridgeInspect.addTeleport(player,kitchen);
         ItemNoHold darkFridgeObject = new ItemInspectActivate(darkFridgeInspect,"fridge", "there is no sandwich.");
         hungyKitchen.addItem(darkFridgeObject);
-
 
 
         ItemNoHold fridgeObject = new ItemNoHold("fridge", "It's empty");
@@ -193,11 +195,36 @@ public class WorldMaker implements Serializable {
         safeCrackerTakable.addAlterer(jimSwitch2);
         diningRoom.addItem(safeCracker);
 
+        AutoRoomAlterer cheeseActivate=new AutoRoomAlterer("cheesetake");
+        ItemHoldable cheeseTake=new ItemTakeActivate("cheese 2","the cheese is ungaurded.\nSEIZE THE MOMENT!","CHEEEEEEEEEEEEEEEEEEEEEESE");
+        cheeseActivate.removeThing(player,cheeseTake);
+        cheeseActivate.addThing(player,cheese);
+        cheeseActivate.addImageChange(hell,"hellempty.png");
+        cheeseActivate.addDescChanger(hell,"hell is now empty of anything of use.");
+        cheeseTake.addAlterer(cheeseActivate);
+        AutoRoomAlterer guardShoot=new AutoRoomAlterer("gaurdshoot");
+        ItemNoHold cheeseGuarded=new ItemNoHold("cheese 1","the cheese is gaurded!\n you cannot take it.");
+        guardShoot.addImageChange(hell,"hellcheese.png");
+        guardShoot.removeThing(hell,cheeseGuarded);
+        guardShoot.addThing(hell,cheeseTake);
+        guardShoot.addDescChanger(hell,"the cheese is ungaurded");
+        ItemNoHold cheeseGaurd=new ItemUseSubject("cheese-guard","protects the cheese","the guard falls",gun);
+        guardShoot.removeThing(hell,cheeseGaurd);
+        cheeseGaurd.addAlterer(guardShoot);
+        hell.addItem(cheeseGuarded);
+        hell.addItem(cheeseGaurd);
+
+
 
 
         ItemNoHold safe=new ItemUseSubject("safe","the bread safe contains the emergency bread supply","the safe is cracked",safeCrackerUsable);
 
-        GameEnd gameEnd=new GameEnd(player,sandwichEaten,sandwichDropped,perished);
+        GameEnd gameEnd=new GameEnd(player,sandwichEaten,sandwichDropped,damned);
+        ItemHoldable pomegranate =new ItemEatable("pomegranate","a fruit of the underworld.\nedible\nand its been so long ssince you've eaten","how could you",gameEnd);
+        AutoRoomAlterer pomegranateEat=new AutoRoomAlterer("pomeat");
+        pomegranateEat.removeThing(player, pomegranate);
+        pomegranate.addAlterer(pomegranateEat);
+        hell.addItem(pomegranate);
         Sandwich sandwich=new Sandwich("sandwich","sandwich","you monster",gameEnd);
         AutoRoomAlterer sandwichDelete=new AutoRoomAlterer("sandwichKiller");
         sandwichDelete.removeThing(player,sandwich);
@@ -210,11 +237,24 @@ public class WorldMaker implements Serializable {
         ItemNoHold mirrorInspectable=new ItemInspectActivate(mirrorInspect,"mirror","You stare at the mirror.\nYour reflection stares back.");
 
         AutoRoomAlterer breakMirror=new AutoRoomAlterer("breakMirror");
+
+        AutoRoomAlterer resetMirror=new AutoRoomAlterer("reset mirror");
+        resetMirror.addThing(bed,mirrorInspectable);
+        resetMirror.addThing(quarry,rock);
+        resetMirror.addImageChange(bed,"bedroom-darkmirror3.png");
+        resetMirror.addThing(bedMirror,mirror);
+        resetMirror.addImageChange(bedMirror,"bedroommirror.png");
+        resetMirror.removeThing(bedMirror,"mirror");
+        CountDown countDown=new CountDown(player,resetMirror,damned);
+        Thread countDownThread=new Thread(countDown);
+
         breakMirror.addImageChange(bed,"bedroombrokenmirror.png");
         breakMirror.addTeleport(player,bed);
         breakMirror.removeThing(bed,mirrorInspectable);
         breakMirror.addThing(bed,"mirror",bedMirror);
-        ItemNoHold mirrorBreakable=new ItemUseSubject("mirror","you stare at the mirror.\n the mirror stares back","the mirror shatters",breakMirror,rock);
+        breakMirror.addImageChange(bedMirror,"bedroommirroredportal.png");
+        breakMirror.addThing(bedMirror,"mirror",bed);
+        ItemNoHold mirrorBreakable=new ItemMirrorTimer("mirror","you stare at the mirror.\n the mirror stares back","the mirror shatters",breakMirror,countDownThread,rock);
         spookyBed.addItem(mirrorBreakable);
 
         AutoRoomAlterer safeCracked=new AutoRoomAlterer("safe");
@@ -265,6 +305,7 @@ public class WorldMaker implements Serializable {
         space.addItem(butterSpace);
 
         itemHoldables.add(gun);
+        itemHoldables.add(pomegranate);
         itemHoldables.add(safeCrackerTakable);
         itemHoldables.add(lifeSavings);
         itemHoldables.add(bread);
@@ -294,6 +335,8 @@ public class WorldMaker implements Serializable {
         itemNoHolds.add(banana3);
         itemNoHolds.add(banana4);
         itemNoHolds.add(sandwichAltar);
+        itemNoHolds.add(cheeseGuarded);
+        itemNoHolds.add(cheeseGuarded);
 
         //altererList.add(wardrobeInspect);
         altererList.add(hamTake);
@@ -301,6 +344,8 @@ public class WorldMaker implements Serializable {
         altererList.add(safeCracked);
         altererList.add(jimSwitch);
         altererList.add(tvFaceUse);
+        altererList.add(resetMirror);
+        altererList.add(guardShoot);
     }
 
     public void createIntroRooms(){
