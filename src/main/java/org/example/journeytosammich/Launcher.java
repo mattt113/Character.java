@@ -10,8 +10,6 @@ public class Launcher {
     private Parser parser;
     private Character player;
     private Printer printer;
-    private boolean cheats=false;
-
     private PlayerActions action;
     private Item itemInUse;
 
@@ -86,7 +84,6 @@ public class Launcher {
                 return action.eatItem(command);
             case "cheats":
                 parser.nefariousCommandsActivator();
-                cheats=true;
                 return ("evil mode active");
             case "tp":
                 return action.teleport(command);
@@ -132,11 +129,11 @@ public class Launcher {
             printer.print(player.getCurrentRoom().getLongDescription());
         }
     }
-    public void goRoom(String direction) {
+    public String goRoom(String direction) {
 
         Room nextRoom = player.getCurrentRoom().getExit(direction);
         player.setCurrentRoom(nextRoom);
-        printer.print(player.getCurrentRoom().getLongDescription());
+        return player.getCurrentRoom().getLongDescription();
 
     }
 
@@ -247,11 +244,7 @@ public class Launcher {
             for(int i=0;i<player.checkAccess().size();i++){
                 Item item=player.checkAccess().get(i);
                 if (itemToEat.equals(item.getName())){
-                    System.out.println("eat");
                     return item.getName()+": "+item.getEatDescription();
-
-
-
                 }
             }
             return "That cannot be eaten";

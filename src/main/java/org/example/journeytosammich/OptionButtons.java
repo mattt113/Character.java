@@ -179,7 +179,7 @@ public class OptionButtons {
                 newButton.setOnAction(new EventHandler<ActionEvent>(){
                     @Override
                     public void handle(ActionEvent event){
-                        game.goRoom(newButton.getText());
+                        pictureMaker.textSetter(game.goRoom(newButton.getText()));
                         setAnchorOptions();
                         inventory.updateGraphic();
                         pictureMaker.updateImage();

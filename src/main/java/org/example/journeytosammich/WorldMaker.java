@@ -12,7 +12,7 @@ public class WorldMaker implements Serializable {
     private ArrayList<Room> roomList;
     private Character player;
     private GameEnd ender;
-    private Room hungyBed,emptyHall,hungyKitchen, kitchen, bed, hall, telly , fridge, livingRoom, diningRoom, wardrobeRoom, basement, abyss, balcony, space, sandwichEaten, sandwichDropped,perished;
+    private Room hungyBed,emptyHall,hungyKitchen, kitchen, bed, hall, telly , fridge, livingRoom, diningRoom, wardrobeRoom, basement, abyss, balcony, space, sandwichEaten, sandwichDropped,perished, bedMirror, spookyBed;
 
 
     public WorldMaker(Stage stage) {
@@ -23,7 +23,6 @@ public class WorldMaker implements Serializable {
 
         player=new Character("player", hungyBed);
         itemMaker(stage);
-
     }
     public Character getPlayer(){
         return player;
@@ -48,6 +47,8 @@ public class WorldMaker implements Serializable {
         roomList.add(sandwichEaten=new Room("hooray","the sandwich is eaten!","glorybe.png"));
         roomList.add(sandwichDropped=new Room("tragedy","how could you?!","glorybegone.png"));
         roomList.add(perished=new Room("your dead!","you died",""));
+        roomList.add(spookyBed=new Room("spookyBedroom","the air feels oppresive","bedroom-darkmirror.png"));
+        roomList.add(bedMirror=new Room("bedmirror","a backwards land of backwords things","bedroommirrored.png"));
 
         fridge.setExit("kitchen", kitchen);
         bed.setExit("hall", hall);
@@ -200,6 +201,12 @@ public class WorldMaker implements Serializable {
 
         ItemNoHold sandwichAltar=new SandwichAltar("sandwich-altar","a holy place for the construction of sandwiches",player,sandwich);
 
+        AutoRoomAlterer mirrorInspect=new AutoRoomAlterer("mirror-inspect");
+        mirrorInspect.addTeleport(player,spookyBed);
+        ItemNoHold mirrorInspectable=new ItemInspectActivate(mirrorInspect,"mirror","You stare at the mirror.\nYour reflection stares back.");
+
+
+
         AutoRoomAlterer safeCracked=new AutoRoomAlterer("safe");
         ItemNoHold borkedSafe=new ItemNoHold("borked safe","its really bronked");
         safeCracked.removeThing(player,safeCrackerUsable);
@@ -213,6 +220,8 @@ public class WorldMaker implements Serializable {
         safeCracked.addThing(wardrobeRoom,borkedSafe);
         safeCracked.addThing(kitchen,sandwichAltar);
         safeCracked.addThing(hall,"basement",basement);
+        safeCracked.removeThing(bed,mirror);
+        safeCracked.addThing(bed,mirrorInspectable);
         safe.addAlterer(safeCracked);
         wardrobeRoom.addItem(safe);
 
