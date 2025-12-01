@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="JourneytoSammich:jar">
+  <artifact type="jar" name="JourneytoSammich:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/JourneytoSammich_jar</output-path>
     <root id="archive" name="JourneytoSammich.jar">
       <element id="module-output" name="JourneytoSammich" />
