@@ -12,7 +12,7 @@ public class WorldMaker implements Serializable {
     private ArrayList<Room> roomList;
     private Character player;
     private GameEnd ender;
-    private Room hungyBed,emptyHall,hungyKitchen, kitchen, bed, hall, telly , fridge, livingRoom, diningRoom, wardrobeRoom, basement, abyss, balcony, space, sandwichEaten, sandwichDropped,perished, bedMirror, spookyBed;
+    private Room hungyBed,emptyHall,hungyKitchen, kitchen, bed, hall, telly , fridge, livingRoom, diningRoom, wardrobeRoom, basement, abyss, balcony, space, sandwichEaten, sandwichDropped,perished, bedMirror, spookyBed, quarry;
 
 
     public WorldMaker(Stage stage) {
@@ -46,9 +46,10 @@ public class WorldMaker implements Serializable {
         roomList.add(space=new Room("space","there are many stars.\n and butter!","spacebutter.png"));
         roomList.add(sandwichEaten=new Room("hooray","the sandwich is eaten!","glorybe.png"));
         roomList.add(sandwichDropped=new Room("tragedy","how could you?!","glorybegone.png"));
-        roomList.add(perished=new Room("your dead!","you died",""));
-        roomList.add(spookyBed=new Room("spookyBedroom","the air feels oppresive","bedroom-darkmirror.png"));
+        roomList.add(perished=new Room("your-dead!","you died",""));
+        roomList.add(spookyBed=new Room("spookyBedroom","the air feels oppresive","bedroom-darkmirror5.png"));
         roomList.add(bedMirror=new Room("bedmirror","a backwards land of backwords things","bedroommirrored.png"));
+        roomList.add(quarry=new Room("quarry","if ever you need to source copius amounts of stone","quarry.png"));
 
         fridge.setExit("kitchen", kitchen);
         bed.setExit("hall", hall);
@@ -67,6 +68,8 @@ public class WorldMaker implements Serializable {
         basement.setExit("hall",hall);
         balcony.setExit("hall",hall);
         space.setExit("balcony",balcony);
+        spookyBed.setExit("hall",hall);
+        quarry.setExit("hall",hall);
 
     }
 
@@ -93,9 +96,10 @@ public class WorldMaker implements Serializable {
         ItemNoHold wardrobe = new ItemInspectActivate(wardrobeInspect,"wardrobe", "heavy");
         ItemHoldable gun = new ItemUseActivate("gun", "a means to an end");
 
-        ItemNoHold mirror = new ItemNoHold("mirror", "You stare into the mirror\nYour reflection stares back");
+        ItemNoHold mirror = new ItemNoHold("mirror", "You stare into the mirror");
 
-
+        ItemHoldable rock=new ItemHoldable("rock","a stone");
+        quarry.addItem(rock);
 
         ItemNoHold banana=new ItemNoHold("banana","banana");
         ItemNoHold banana2=new ItemNoHold("bananana","bananana");
@@ -205,7 +209,13 @@ public class WorldMaker implements Serializable {
         mirrorInspect.addTeleport(player,spookyBed);
         ItemNoHold mirrorInspectable=new ItemInspectActivate(mirrorInspect,"mirror","You stare at the mirror.\nYour reflection stares back.");
 
-
+        AutoRoomAlterer breakMirror=new AutoRoomAlterer("breakMirror");
+        breakMirror.addImageChange(bed,"bedroombrokenmirror.png");
+        breakMirror.addTeleport(player,bed);
+        breakMirror.removeThing(bed,mirrorInspectable);
+        breakMirror.addThing(bed,"mirror",bedMirror);
+        ItemNoHold mirrorBreakable=new ItemUseSubject("mirror","you stare at the mirror.\n the mirror stares back","the mirror shatters",breakMirror,rock);
+        spookyBed.addItem(mirrorBreakable);
 
         AutoRoomAlterer safeCracked=new AutoRoomAlterer("safe");
         ItemNoHold borkedSafe=new ItemNoHold("borked safe","its really bronked");
@@ -221,7 +231,9 @@ public class WorldMaker implements Serializable {
         safeCracked.addThing(kitchen,sandwichAltar);
         safeCracked.addThing(hall,"basement",basement);
         safeCracked.removeThing(bed,mirror);
+        safeCracked.addThing(hall,"quarry",quarry);
         safeCracked.addThing(bed,mirrorInspectable);
+        safeCracked.addImageChange(bed,"bedroom-darkmirror3.png");
         safe.addAlterer(safeCracked);
         wardrobeRoom.addItem(safe);
 
@@ -233,6 +245,9 @@ public class WorldMaker implements Serializable {
         AutoRoomAlterer boxInspect=new AutoRoomAlterer("box");
         boxInspect.addThing(basement,butterNet);
         ItemNoHold boxes=new ItemInspectActivate(boxInspect,"boxes","filled with stuff.");
+
+
+
 
 
 
@@ -259,6 +274,7 @@ public class WorldMaker implements Serializable {
         itemHoldables.add(butterNet);
         itemHoldables.add(sandwich);
         itemHoldables.add(endItem);
+        itemHoldables.add(rock);
 
         itemNoHolds.add(safe);
         itemNoHolds.add(wardrobe);
