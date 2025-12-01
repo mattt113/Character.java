@@ -82,7 +82,6 @@ public class Room implements Serializable {
         furniture.remove(thing);
     }
     public void addItem(ItemNoHold item){
-        item.setLocation(this);
         furniture.add(item);
     }
 

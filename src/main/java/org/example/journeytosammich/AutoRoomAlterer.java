@@ -109,6 +109,7 @@ public class AutoRoomAlterer implements Serializable {
         }
         if(removeItemsNoHold!=null) {
             for (Room room : removeItemsNoHold.keySet()) {
+
                 room.removeItem(removeItemsNoHold.get(room));
             }
         }

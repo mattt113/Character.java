@@ -203,17 +203,18 @@ public class WorldMaker implements Serializable {
         cheeseActivate.addDescChanger(hell,"hell is now empty of anything of use.");
         cheeseTake.addAlterer(cheeseActivate);
         AutoRoomAlterer guardShoot=new AutoRoomAlterer("gaurdshoot");
-        ItemNoHold cheeseGuarded=new ItemNoHold("cheese 1","the cheese is gaurded!\n you cannot take it.");
+       // ItemNoHold cheeseGuarded=new ItemNoHold("cheese 1","the cheese is guarded!\nyou cannot take it.");
         guardShoot.addImageChange(hell,"hellcheese.png");
-        guardShoot.removeThing(hell,cheeseGuarded);
+
+       // guardShoot.removeThing(hell,cheeseGuarded);
         guardShoot.addThing(hell,cheeseTake);
         guardShoot.addDescChanger(hell,"the cheese is ungaurded");
-        ItemNoHold cheeseGaurd=new ItemUseSubject("cheese-guard","protects the cheese","the guard falls",gun);
-        guardShoot.removeThing(hell,cheeseGaurd);
-        cheeseGaurd.addAlterer(guardShoot);
-        hell.addItem(cheeseGuarded);
-        hell.addItem(cheeseGaurd);
+        ItemNoHold cheeseGuard=new ItemUseSubject("cheese-guard","he protects the cheese.\n while he remains, the cheese shall be inaccessible","the guard falls",gun);
+        guardShoot.removeThing(hell,cheeseGuard);
+        cheeseGuard.addAlterer(guardShoot);
 
+        hell.addItem(cheeseGuard);
+        //hell.addItem(cheeseGuarded);
 
 
 
@@ -245,6 +246,7 @@ public class WorldMaker implements Serializable {
         resetMirror.addThing(bedMirror,mirror);
         resetMirror.addImageChange(bedMirror,"bedroommirror.png");
         resetMirror.removeThing(bedMirror,"mirror");
+        resetMirror.removeThing(bed,"mirror");
         CountDown countDown=new CountDown(player,resetMirror,damned);
         Thread countDownThread=new Thread(countDown);
 
@@ -335,8 +337,8 @@ public class WorldMaker implements Serializable {
         itemNoHolds.add(banana3);
         itemNoHolds.add(banana4);
         itemNoHolds.add(sandwichAltar);
-        itemNoHolds.add(cheeseGuarded);
-        itemNoHolds.add(cheeseGuarded);
+//        itemNoHolds.add(cheeseGuarded);
+        itemNoHolds.add(cheeseGuard);
 
         //altererList.add(wardrobeInspect);
         altererList.add(hamTake);
