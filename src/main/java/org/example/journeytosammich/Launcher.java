@@ -193,7 +193,7 @@ public class Launcher {
         else if(maybeFoodItem==null){
             return "You possess no such thing";
         }
-        else if(maybeFoodItem.getName().equals("sandwich")){
+        else if(maybeFoodItem instanceof ItemEatable){
             return maybeFoodItem.activate();
         }
 

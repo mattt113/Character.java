@@ -1,8 +1,8 @@
 package org.example.journeytosammich;
 
 public class ItemUseSubject extends ItemNoHold{
-    private Item itemNeeded;
-    private String useText;
+    protected Item itemNeeded;
+    protected String useText;
 
 
     public ItemUseSubject(String name, String description,String reUseDesc,AutoRoomAlterer reRoomChanger,Item item) {

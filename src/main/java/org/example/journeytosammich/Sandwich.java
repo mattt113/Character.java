@@ -1,12 +1,9 @@
 package org.example.journeytosammich;
 
-public class Sandwich extends ItemHoldable {
-    private String takeDesc;
-    private GameEnd gameEnd;
+public class Sandwich extends ItemEatable {
+
     public Sandwich(String name, String description, String reTakeDesc, GameEnd reGameEnd) {
-        super(name, description);
-        takeDesc=reTakeDesc;
-        gameEnd=reGameEnd;
+        super(name, description,reTakeDesc,reGameEnd);
     }
     @Override
     public String activate(){
