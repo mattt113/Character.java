@@ -65,7 +65,7 @@ public class OptionButtons {
                     } else if (inventory.getCurrentButton().getText().equals("room")) {
                         pictureMaker.textSetter("cannot use room");
                     } else if (inventory.getCurrentButton() != null) {
-                        pictureMaker.textSetter(game.useItem(inventory.getCurrentButton().getText()));
+                        pictureMaker.textSetter(game.getActions().useItem(inventory.getCurrentButton().getText()));
                     }
                 }
                 else{
@@ -80,10 +80,10 @@ public class OptionButtons {
             @Override
             public void handle(ActionEvent actionEvent) {
                 if(inventory.getRoomInventory().contains(inventory.getCurrentButton())){
-                    pictureMaker.textSetter(game.getItem(inventory.getCurrentButton().getText()));
+                    pictureMaker.textSetter(game.getActions().getItem(inventory.getCurrentButton().getText()));
                 }
                 else if(inventory.getSelfInventory().contains(inventory.getCurrentButton())){
-                    pictureMaker.textSetter(game.dropItem(inventory.getCurrentButton().getText()));
+                    pictureMaker.textSetter(game.getActions().dropItem(inventory.getCurrentButton().getText()));
                 }
                 else{
                     pictureMaker.textSetter("select button");
@@ -97,7 +97,7 @@ public class OptionButtons {
             @Override
             public void handle(ActionEvent actionEvent) {
                 if(inventory.getCurrentButton()!=null) {
-                    pictureMaker.textSetter(game.eatItem(inventory.getCurrentButton().getText()));
+                    pictureMaker.textSetter(game.getActions().eatItem(inventory.getCurrentButton().getText()));
                 }
                 else{
                     pictureMaker.textSetter("select button");
@@ -179,7 +179,7 @@ public class OptionButtons {
                 newButton.setOnAction(new EventHandler<ActionEvent>(){
                     @Override
                     public void handle(ActionEvent event){
-                        pictureMaker.textSetter(game.goRoom(newButton.getText()));
+                        pictureMaker.textSetter(game.getActions().goRoom(newButton.getText()));
                         setAnchorOptions();
                         inventory.updateGraphic();
                         pictureMaker.updateImage();
