@@ -8,9 +8,9 @@ public class Room implements Serializable {
     protected String name;
     protected String description;
     protected Map<String, Room> exits; // Map direction to neighboring Room
-    protected ArrayList<ItemHoldable> items=new ArrayList<ItemHoldable>();
-    protected ArrayList<ItemNoHold> furniture=new ArrayList<ItemNoHold>();
-    protected String image="NoPicture.png";
+    protected ArrayList<ItemHoldable> items=new ArrayList<>();
+    protected ArrayList<ItemNoHold> furniture=new ArrayList<>();
+    protected String image;
 
 
     public String getName(){
@@ -26,8 +26,8 @@ public class Room implements Serializable {
     public String getDescription() {
         return description;
     }
-    public void setDescription(String redesc){
-        description=redesc;
+    public void setDescription(String reDesc){
+        description=reDesc;
     }
 
     public void setExit(String direction, Room neighbor) {
@@ -75,7 +75,7 @@ public class Room implements Serializable {
        }
     }
     public void removeItem(ItemHoldable thing){
-        thing.setLocation(null);
+
         items.remove(thing);
     }
     public void removeItem(ItemNoHold thing){

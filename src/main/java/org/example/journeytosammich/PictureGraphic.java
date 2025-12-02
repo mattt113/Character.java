@@ -2,14 +2,10 @@ package org.example.journeytosammich;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.TextFlow;
-import javafx.scene.text.Text;
 
 public class PictureGraphic {
     private String picture;
@@ -105,15 +101,7 @@ public class PictureGraphic {
     }
 
 
-    public void halt(long time){
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-            System.out.println("Sleep failed  :(");
-        }
-    }
-
-    public void addInventory(InventoryGraphic reInventory) {
+    public void addInventoryGraphic(InventoryGraphic reInventory) {
         inventory=reInventory;
     }
 }

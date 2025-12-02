@@ -4,7 +4,7 @@ public class CountDown extends Thread{
     Character player;
     AutoRoomAlterer mirrorReset;
     Room damned;
-    long countFrom=10;
+    long countFrom=30;
 
 
     public CountDown(Character rePlayer,AutoRoomAlterer reMirrorReset,Room reDamned){

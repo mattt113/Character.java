@@ -7,8 +7,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import javax.sound.sampled.*;
-import java.io.File;
 import java.io.IOException;
 
 public class GuiMaker extends Application{// implements EventHandler<ActionEvent> {
@@ -29,7 +27,7 @@ public class GuiMaker extends Application{// implements EventHandler<ActionEvent
         pictureMaker=new PictureGraphic(game,width,height);
         buttons=new OptionButtons(game,pictureMaker,width,height);
         inventory=new InventoryGraphic(buttons,game);
-        pictureMaker.addInventory(inventory);
+        pictureMaker.addInventoryGraphic(inventory);
         inventoryScroll = inventory.addInventory();
 
         saveOptions=inventory.addSaveOptions(stage);
@@ -39,7 +37,7 @@ public class GuiMaker extends Application{// implements EventHandler<ActionEvent
 
         anchor = new AnchorPane(inventoryScroll,graphic,actions,saveOptions);
         setSizes();
-        startAudio();
+//        startAudio();
         Scene scene = new Scene(anchor, width, height);
         stage.setTitle("Hello World!");
 
@@ -75,30 +73,30 @@ public class GuiMaker extends Application{// implements EventHandler<ActionEvent
         AnchorPane.setTopAnchor(saveOptions, 0.0);
         AnchorPane.setLeftAnchor(saveOptions, ((width / 3) * 2));
     }
-    public void startAudio() { //resource: https://www.youtube.com/watch?v=P856ukheHeE
-        File audioFile = new File("src/main/resources/org/example/journeytosammich/adventureline.wav");
-        AudioInputStream audioStream = null;
-        try {
-            audioStream = AudioSystem.getAudioInputStream(audioFile);
-        } catch (UnsupportedAudioFileException e) {
-           // throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Clip clip = null;
-        try {
-            clip = AudioSystem.getClip();
-        } catch (LineUnavailableException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            clip.open(audioStream);
-        } catch (LineUnavailableException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
-        clip.start();
-    }
+//    public void startAudio() { //resource: https://www.youtube.com/watch?v=P856ukheHeE
+//        File audioFile = new File("src/main/resources/org/example/journeytosammich/adventureline.wav");
+//        AudioInputStream audioStream = null;
+//        try {
+//            audioStream = AudioSystem.getAudioInputStream(audioFile);
+//        } catch (UnsupportedAudioFileException e) {
+//           // throw new RuntimeException(e);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        Clip clip = null;
+//        try {
+//            clip = AudioSystem.getClip();
+//        } catch (LineUnavailableException e) {
+//            throw new RuntimeException(e);
+//        }
+//        try {
+//            clip.open(audioStream);
+//        } catch (LineUnavailableException e) {
+//            throw new RuntimeException(e);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        clip.loop(Clip.LOOP_CONTINUOUSLY);
+//        clip.start();
+//    }
 }

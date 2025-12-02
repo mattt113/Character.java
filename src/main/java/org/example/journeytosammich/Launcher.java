@@ -334,6 +334,7 @@ public class Launcher {
     public Character getPlayer(){
         return player;
     }
+
     public static void main(String[] args){
         Application.launch(GuiMaker.class, args);
         //Launcher game = new Launcher();

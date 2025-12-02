@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Character implements Serializable {
     private String name;
     private Room currentRoom;
-    private ArrayList<ItemHoldable> inventory = new ArrayList();
+    private ArrayList<ItemHoldable> inventory = new ArrayList<>();
 
     public Character(String name, Room startingRoom) {
         this.name = name;
@@ -55,7 +55,7 @@ public class Character implements Serializable {
         return inventory;
     }
     public ArrayList<Item> checkAccess(){
-        ArrayList<Item> accessibleItems=new ArrayList<Item>();
+        ArrayList<Item> accessibleItems=new ArrayList<>();
         accessibleItems.addAll(inventory);
         if(currentRoom.getContents()!=null) {
             ArrayList<Item> roomItems = currentRoom.getContents();
