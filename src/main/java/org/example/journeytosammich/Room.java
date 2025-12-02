@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 
-public class Room implements Serializable {
+public class Room implements Serializable, Cheatable {
     protected String name;
     protected String description;
     protected Map<String, Room> exits; // Map direction to neighboring Room
@@ -12,6 +12,11 @@ public class Room implements Serializable {
     protected ArrayList<ItemNoHold> furniture=new ArrayList<>();
     protected String image;
 
+
+    @Override
+    public void setName(String reName) {
+        name=reName;
+    }
 
     public String getName(){
         return name;

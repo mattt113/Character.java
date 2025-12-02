@@ -5,4 +5,8 @@ public interface ItemInterface {
     String useItem(Item item);
     String getDescription();
     void setDescription(String description);
+    void setName(String name);
+    void addAlterer(AutoRoomAlterer alterer);
+    String activate();
+    String getEatDescription();
 }

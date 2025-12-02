@@ -1,10 +1,13 @@
 package org.example.journeytosammich;
 
-public class BoxOfBoxing<T extends ItemInterface>{
+public class BoxOfBoxing<T extends ItemInterface> extends Item{
     private T value;
 
+    public BoxOfBoxing(String rename, String redescription) {
+        super(rename, redescription);
+    }
 
-    public void setValue(T revalue){
+    public void setValue(T revalue) {
         value=revalue;
     }
 

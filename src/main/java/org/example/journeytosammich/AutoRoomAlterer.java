@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 import java.io.Serializable;
 import java.util.HashMap;
 
-public class AutoRoomAlterer implements Serializable {
+public class AutoRoomAlterer implements Serializable, Cheatable {
     private String name;
     private HashMap<Room,HashMap<String,Room>> thingToAdd;
     private HashMap<Room,String> thingToRemove;
@@ -39,6 +39,12 @@ public class AutoRoomAlterer implements Serializable {
     private void endGame(){
         stage.close();
     }
+
+    @Override
+    public void setName(String name) {
+        this.name=name;
+    }
+
     public String getName(){
         return name;
     }
