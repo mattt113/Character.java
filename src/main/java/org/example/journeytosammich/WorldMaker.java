@@ -11,7 +11,7 @@ public class WorldMaker implements Serializable {
     private ArrayList<AutoRoomAlterer> altererList;
     private ArrayList<Room> roomList;
     private Character player;
-    private Room hungyBed,emptyHall,hungyKitchen, kitchen, bed, hall, telly , fridge, livingRoom, diningRoom, wardrobeRoom,
+    private Room hungyBed, emptyHall,hungyKitchen, kitchen, bed, hall, telly , fridge, livingRoom, diningRoom, wardrobeRoom,
             basement, balcony, space, sandwichEaten, sandwichDropped, bedMirror, spookyBed, quarry, damned, hell;
 
 
@@ -203,10 +203,10 @@ public class WorldMaker implements Serializable {
         cheeseActivate.addDescChanger(hell,"hell is now empty of anything of use.");
         cheeseTake.addAlterer(cheeseActivate);
         AutoRoomAlterer guardShoot=new AutoRoomAlterer("gaurdshoot");
-       // ItemNoHold cheeseGuarded=new ItemNoHold("cheese 1","the cheese is guarded!\nyou cannot take it.");
+        ItemNoHold cheeseGuarded=new ItemNoHold("cheese 1","the cheese is guarded!\nyou cannot take it.");
         guardShoot.addImageChange(hell,"hellcheese.png");
 
-       // guardShoot.removeThing(hell,cheeseGuarded);
+        guardShoot.removeThing(hell,cheeseGuarded);
         guardShoot.addThing(hell,cheeseTake);
         guardShoot.addDescChanger(hell,"the cheese is ungaurded");
         ItemNoHold cheeseGuard=new ItemUseSubject("cheese-guard","he protects the cheese.\n while he remains, the cheese shall be inaccessible","the guard falls",gun);
@@ -214,7 +214,7 @@ public class WorldMaker implements Serializable {
         cheeseGuard.addAlterer(guardShoot);
 
         hell.addItem(cheeseGuard);
-        //hell.addItem(cheeseGuarded);
+        hell.addItem(cheeseGuarded);
 
 
 
@@ -238,7 +238,7 @@ public class WorldMaker implements Serializable {
         ItemNoHold mirrorInspectable=new ItemInspectActivate(mirrorInspect,"mirror","You stare at the mirror.\nYour reflection stares back.");
 
         AutoRoomAlterer breakMirror=new AutoRoomAlterer("breakMirror");
-
+        ItemNoHold mirrorBroken=new ItemNoHold("broken-mirror","it seems to be reassembling itself.\n better be quick");
         AutoRoomAlterer resetMirror=new AutoRoomAlterer("reset mirror");
         resetMirror.addThing(bed,mirrorInspectable);
         resetMirror.addThing(quarry,rock);
@@ -247,6 +247,8 @@ public class WorldMaker implements Serializable {
         resetMirror.addImageChange(bedMirror,"bedroommirror.png");
         resetMirror.removeThing(bedMirror,"mirror");
         resetMirror.removeThing(bed,"mirror");
+        resetMirror.removeThing(bed,mirrorBroken);
+        resetMirror.removeThing(bedMirror,mirrorBroken);
         CountDown countDown=new CountDown(player,resetMirror,damned);
         Thread countDownThread=new Thread(countDown);
 
@@ -256,6 +258,8 @@ public class WorldMaker implements Serializable {
         breakMirror.addThing(bed,"mirror",bedMirror);
         breakMirror.addImageChange(bedMirror,"bedroommirroredportal.png");
         breakMirror.addThing(bedMirror,"mirror",bed);
+        breakMirror.addThing(bed,mirrorBroken);
+        breakMirror.addThing(bedMirror,mirrorBroken);
         ItemNoHold mirrorBreakable=new ItemMirrorTimer("mirror","you stare at the mirror.\n the mirror stares back","the mirror shatters",breakMirror,countDownThread,rock);
         spookyBed.addItem(mirrorBreakable);
 
@@ -353,7 +357,8 @@ public class WorldMaker implements Serializable {
     public void createIntroRooms(){
         roomList.add(hungyBed = new Room("introbedroom","you awake, hungry.\nyou recall the sandwich you stored in your kitchen the night before" +
                 "\nyou arise to go in search of the sandwich.","bedroomstart.png"));
-        roomList.add(emptyHall = new Room("introhall","the door to the kitchen lies ahead","oldhalldark.png"));
+        roomList.add(emptyHall = new Room("introhall","the door to the kitchen lies ahead","oldHallDark.png"));
+        emptyHall.setImage("oldHallDark.png");
         roomList.add(hungyKitchen = new Room("introkitchen","behold the fridge, where the sandwich resides","kitchenfridge.png"));
 
         hungyBed.setExit("hall", emptyHall);
