@@ -1,6 +1,6 @@
 package org.example.journeytosammich;
 
-import javafx.stage.Stage;
+//import javafx.stage.Stage;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -19,26 +19,13 @@ public class AutoRoomAlterer implements Serializable, Cheatable {
     private ItemHoldable addToPlayer;
     private Room teleportLocation;
     private Character player;
-    private Stage stage;
+    private boolean endGame;
+
 
     public AutoRoomAlterer(String reName){
         name=reName;
-//        exitToAdd =new HashMap<>();
-//        exitToRemove =new HashMap<>();
-//        addItemsNoHold =new HashMap<>();
-//        removeItemsNoHold =new HashMap<>();
-//        addItemsHold=new HashMap<>();
-//        descChanger=new HashMap<>();
-//        imageChanger=new HashMap<>();
-
-    }
-    public void addThing(Stage reStage){
-        stage=reStage;
     }
 
-    private void endGame(){
-        stage.close();
-    }
 
     @Override
     public void setName(String name) {
@@ -113,9 +100,12 @@ public class AutoRoomAlterer implements Serializable, Cheatable {
         player=replayer;
         teleportLocation=room;
     }
+    public void endGame(boolean reEndGame) {
+        endGame=reEndGame;
+    }
     public void enactChange(){
-        if(stage!=null){
-            endGame();
+        if(endGame){
+            GuiMaker.endGame();
         }
         if(exitToRemove !=null) {
             for (Room room : exitToRemove.keySet()) {
@@ -164,4 +154,6 @@ public class AutoRoomAlterer implements Serializable, Cheatable {
             player.pickUp(addToPlayer);
         }
     }
+
+
 }

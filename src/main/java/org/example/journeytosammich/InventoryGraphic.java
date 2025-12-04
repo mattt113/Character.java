@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.ScrollPane;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
@@ -18,11 +17,13 @@ public class InventoryGraphic {
     private Button currentButton,self,room;
     private OptionButtons controls;
     private Launcher game;
+    private PictureGraphic pictureMaker;
 
     private ArrayList<Button> selfInventory=new ArrayList<Button>();
     private ArrayList<Button> roomInventory=new ArrayList<Button>();
-    public InventoryGraphic(OptionButtons reControls,Launcher regame){
+    public InventoryGraphic(OptionButtons reControls, Launcher regame, PictureGraphic rePictureMaker){
         game=regame;
+        pictureMaker=rePictureMaker;
         vbox = new VBox();
         vbox.setPadding(new Insets(15, 12, 15, 12));
         vbox.setSpacing(10);
@@ -120,26 +121,26 @@ public class InventoryGraphic {
         return currentButton;
     }
 
-    public HBox addSaveOptions(Stage stage){
+    public HBox addSaveOptions(){
         Button save=new Button("save");
         Button unsave=new Button("unsave");
         Button quit=new Button("quit");
         save.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event){
-                game.save();
+                pictureMaker.textSetter(game.save());
             }
         });
         unsave.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event){
-                game.deleteSave();
+               pictureMaker.textSetter( game.deleteSave());
             }
         });
         quit.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event){
-                stage.close();
+                GuiMaker.endGame();
             }
         });
 

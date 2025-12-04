@@ -7,16 +7,15 @@ public class CountDown extends Thread{
     long countFrom=30;
 
 
-    public CountDown(Character rePlayer,AutoRoomAlterer reMirrorReset,Room reDamned){
+    public CountDown(Character rePlayer,AutoRoomAlterer reMirrorReset){
         player=rePlayer;
         mirrorReset=reMirrorReset;
-        damned=reDamned;
+
     }
     public CountDown(Character rePlayer,AutoRoomAlterer reMirrorReset,Room reDamned,long countDownTime){
         player=rePlayer;
         mirrorReset=reMirrorReset;
         damned=reDamned;
-        countFrom=countDownTime;
     }
 
     @Override

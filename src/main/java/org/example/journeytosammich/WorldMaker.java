@@ -1,6 +1,6 @@
 package org.example.journeytosammich;
 
-import javafx.stage.Stage;
+//import javafx.stage.Stage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,29 +15,30 @@ public class WorldMaker implements Serializable {
             basement, balcony, space, sandwichEaten, sandwichDropped, bedMirror, spookyBed, quarry, damned, hell;
 
 
-    public WorldMaker(Stage stage) {
+    public WorldMaker() {
 
-        roomList=new ArrayList<>();
+
         roomMakerStart();
         createIntroRooms();
 
         player=new Character("player", hungyBed);
-        itemMaker(stage);
+        itemMaker();
+
+
     }
     public Character getPlayer(){
         return player;
     }
 
     public void roomMakerStart() {
-        altererList=new ArrayList<>();
-        itemNoHolds=new ArrayList<>();
+        roomList=new ArrayList<>();
 
         roomList.add(bed = new Room("bedroom","your bed beckons, but you cannot rest, for your hunger remains","bedroomColour.png"));
         roomList.add(hall = new Room("hall","many doors line the hall, several of which are unexplored.","hall.png"));
         roomList.add(kitchen = new Room("kitchen","the kitchen is empty of food","kitchenclean.png"));
         roomList.add(fridge = new Room("fridge","in the fridge","wealthyfridge.png"));
         roomList.add(livingRoom = new Room("livingroom","the buss of static fills the room","tvRoom.png"));
-        roomList.add(telly = new Room("telly","He seems very happy :)","theTelly.png"));
+        roomList.add(telly = new Room("telly","He seems very happy :)","TheTelly.png"));
         roomList.add(diningRoom=new Room("diningroom","there is no food","DavesDiningRoom.png"));
         roomList.add(wardrobeRoom=new Room("wardrobe","the wardrobe is filled with stuff","wardrobe.png"));
         roomList.add(basement =new Room("basement","quite dark down here","basement.png"));
@@ -76,11 +77,14 @@ public class WorldMaker implements Serializable {
 
     }
 
-    public void itemMaker(Stage stage) {
+    public void itemMaker() {
+
+        altererList=new ArrayList<>();
+        itemNoHolds=new ArrayList<>();
         itemHoldables =new ArrayList<>();
 
         AutoRoomAlterer ender=new AutoRoomAlterer("ender");
-        ender.addThing(stage);
+        ender.endGame(true);
         ItemHoldable endItem=new ItemTakeActivate("the-end","ends the game when taken","thanks for playing");
         endItem.addAlterer(ender);
 
@@ -92,6 +96,9 @@ public class WorldMaker implements Serializable {
         ItemHoldable cheese=new SandwichComponent("cheese","the cheese");
         ItemHoldable butter=new SandwichComponent("butter","the Butter");
         ItemHoldable bread=new SandwichComponent("bread","the bread of breadening");
+
+        Box<ItemHoldable> magicBox=new Box<>("magic box","a really cool magical box (I hate it.)",player);
+
 
         //make bed items
         AutoRoomAlterer wardrobeInspect=new AutoRoomAlterer("wardrobetp");
@@ -249,8 +256,7 @@ public class WorldMaker implements Serializable {
         resetMirror.removeThing(bed,"mirror");
         resetMirror.removeThing(bed,mirrorBroken);
         resetMirror.removeThing(bedMirror,mirrorBroken);
-        CountDown countDown=new CountDown(player,resetMirror,damned);
-        Thread countDownThread=new Thread(countDown);
+
 
         breakMirror.addImageChange(bed,"bedroombrokenmirror.png");
         breakMirror.addTeleport(player,bed);
@@ -260,7 +266,7 @@ public class WorldMaker implements Serializable {
         breakMirror.addThing(bedMirror,"mirror",bed);
         breakMirror.addThing(bed,mirrorBroken);
         breakMirror.addThing(bedMirror,mirrorBroken);
-        ItemNoHold mirrorBreakable=new ItemMirrorTimer("mirror","you stare at the mirror.\n the mirror stares back","the mirror shatters",breakMirror,countDownThread,rock);
+        ItemNoHold mirrorBreakable=new ItemMirrorTimer("mirror","you stare at the mirror.\n the mirror stares back","the mirror shatters",breakMirror,player,resetMirror,rock);
         spookyBed.addItem(mirrorBreakable);
 
         AutoRoomAlterer safeCracked=new AutoRoomAlterer("safe");
@@ -295,7 +301,8 @@ public class WorldMaker implements Serializable {
 
 
 
-
+        bed.addItem(magicBox);
+        kitchen.addItem(magicBox);
 
         bed.addItem(wardrobe);
         bed.addItem(mirror);
@@ -320,7 +327,7 @@ public class WorldMaker implements Serializable {
         itemHoldables.add(butter);
         itemHoldables.add(butterNet);
         itemHoldables.add(sandwich);
-        itemHoldables.add(endItem);
+        //itemHoldables.add(endItem);
         itemHoldables.add(rock);
 
         itemNoHolds.add(safe);

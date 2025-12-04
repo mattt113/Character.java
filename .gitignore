@@ -42,3 +42,4 @@ build/
 absolutelyUseless/
 .idea/
 *.txt
+*.ser

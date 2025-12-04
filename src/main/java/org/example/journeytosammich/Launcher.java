@@ -1,9 +1,7 @@
 package org.example.journeytosammich;
 
 import javafx.application.Application;
-import javafx.stage.Stage;
 
-import java.util.ArrayList;
 
 public class Launcher {
     private WorldMaker world;
@@ -14,18 +12,18 @@ public class Launcher {
 
 
 
-    public Launcher(Stage stage) {
-        createRooms(stage);
+    public Launcher() {
+        createRooms();
         parser = new Parser();
 
         action=new PlayerActions(player,parser,world);
     }
 
-    private void createRooms(Stage stage) {
+    private void createRooms() {
         RestoreSave restoreSave=new RestoreSave();
         world= restoreSave.restoreWorld();
         if(world==null) {
-            world = new WorldMaker(stage);
+            world = new WorldMaker();
         }
 
 
@@ -80,7 +78,7 @@ public class Launcher {
             case "tp":
                 return action.teleport(command);
             case "make":
-                return action.getItem(command);
+                return action.addItem(command);
             case "alterer":
                 return action.altererActivate(command);
             case "list":

@@ -35,7 +35,9 @@ public class PlayerActions {
     public String goRoom(String direction) {
 
         Room nextRoom = player.getCurrentRoom().getExit(direction);
-        player.setCurrentRoom(nextRoom);
+        if(nextRoom!=null) {
+            player.setCurrentRoom(nextRoom);
+        }
         return player.getCurrentRoom().getLongDescription();
 
     }
@@ -272,6 +274,7 @@ public class PlayerActions {
             item=player.checkAccess().get(i);
             if (itemUsed.equals(item.getName())){
                 Item tempItemInUse=itemInUse;
+    System.out.println(item.getName());
                 if((!player.getInventory().contains(itemInUse))&&(itemInUse instanceof ItemUseActivate)){
                     return "Item must be in inventory to be used";
                 }
@@ -279,6 +282,9 @@ public class PlayerActions {
                 if ((item instanceof ItemUseSubject)&&!(player.getCurrentRoom().getContents().contains(itemInUse))){
                     itemInUse=null;
                 }
+    System.out.println(tempItemInUse.getName());
+    System.out.println(tempItemInUse.getClass());
+    System.out.println(item.getClass());
                 return item.useItem(tempItemInUse);
             }
         }
