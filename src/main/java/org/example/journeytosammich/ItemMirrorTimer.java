@@ -18,6 +18,14 @@ public class ItemMirrorTimer extends ItemUseSubject implements Serializable {
             if (roomChanger != null) {
                 roomChanger.enactChange();
             }
+            System.out.println(item.getName());
+            String soundEffectPlay=item.getSoundEffect();
+            System.out.println(soundEffectPlay);
+            if (soundEffectPlay!=null){
+                NoiseMaker noiseMaker=new NoiseMaker(soundEffectPlay);
+                System.out.println(1);
+                noiseMaker.startAudio();
+            }
             CountDown countDown=new CountDown(player,resetMirror);
             Thread countDownThread=new Thread(countDown);
             countDownThread.start();

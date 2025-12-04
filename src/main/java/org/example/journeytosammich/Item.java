@@ -6,6 +6,7 @@ public abstract class Item implements Serializable,ItemInterface, Cheatable {
     protected String description;
     protected String name;
     protected AutoRoomAlterer roomChanger;
+    protected String soundEffect;
 
 
     public Item(String rename, String redescription) {
@@ -49,5 +50,8 @@ public abstract class Item implements Serializable,ItemInterface, Cheatable {
 
     public String getEatDescription() {
         return "your teeth chip and shatter";
+    }
+    public String getSoundEffect(){
+        return soundEffect;
     }
 }

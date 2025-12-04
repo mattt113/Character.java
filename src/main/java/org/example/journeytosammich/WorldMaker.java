@@ -104,11 +104,11 @@ public class WorldMaker implements Serializable {
         AutoRoomAlterer wardrobeInspect=new AutoRoomAlterer("wardrobetp");
         wardrobeInspect.addTeleport(player,wardrobeRoom);
         ItemNoHold wardrobe = new ItemInspectActivate(wardrobeInspect,"wardrobe", "heavy");
-        ItemHoldable gun = new ItemUseActivate("gun", "a means to an end");
+        ItemHoldable gun = new ItemUseActivate("gun", "a means to an end","bang.wav");
 
         ItemNoHold mirror = new ItemNoHold("mirror", "You stare into the mirror");
 
-        ItemHoldable rock=new ItemHoldable("rock","a stone");
+        ItemHoldable rock=new ItemUseActivate("rock","a stone","shatter.wav");
         quarry.addItem(rock);
 
         ItemNoHold banana=new ItemNoHold("banana","banana");
@@ -177,7 +177,7 @@ public class WorldMaker implements Serializable {
 
         telly.addItem(tvFace);
 
-        ItemHoldable lifeSavingsUsable=new ItemUseActivate("life savings","literally all of your money");
+        ItemHoldable lifeSavingsUsable=new ItemUseActivate("life savings","literally all of your money","wealth.wav");
         AutoRoomAlterer savingsTake=new AutoRoomAlterer("savingsTake");
         savingsTake.addThing(player,lifeSavingsUsable);
         ItemHoldable lifeSavings=new ItemTakeActivate("life savings","literally all of your money","money");
@@ -189,7 +189,7 @@ public class WorldMaker implements Serializable {
         AutoRoomAlterer jimSwitch2=new AutoRoomAlterer("jimSwitch2");
         ItemNoHold safeCracker=new ItemUseSubject("Jim the despiser of safes ","He fucking hates safes","alright",lifeSavingsUsable);
         ItemHoldable safeCrackerTakable =new ItemTakeActivate("Jim the despiser of safes","take him to the safe","you hoist jim onto your back");
-        ItemHoldable safeCrackerUsable=new ItemUseActivate("Jim the despiser of safes","take him to the safe");
+        ItemHoldable safeCrackerUsable=new ItemUseActivate("Jim the despiser of safes","take him to the safe","kaboom.wav");
         jimSwitch2.addImageChange(diningRoom,"DiningRoom.png");
         jimSwitch2.addThing(player,safeCrackerUsable);
         jimSwitch2.removeThing(player, safeCrackerTakable);
@@ -327,8 +327,9 @@ public class WorldMaker implements Serializable {
         itemHoldables.add(butter);
         itemHoldables.add(butterNet);
         itemHoldables.add(sandwich);
-        //itemHoldables.add(endItem);
+        itemHoldables.add(endItem);
         itemHoldables.add(rock);
+        itemHoldables.add(safeCrackerUsable);
 
         itemNoHolds.add(safe);
         itemNoHolds.add(wardrobe);
@@ -359,6 +360,10 @@ public class WorldMaker implements Serializable {
         altererList.add(tvFaceUse);
         altererList.add(resetMirror);
         altererList.add(guardShoot);
+
+
+        hungyBed.addItem(mirrorBreakable);
+        hungyBed.addItem(rock);
     }
 
     public void createIntroRooms(){

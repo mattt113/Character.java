@@ -26,6 +26,13 @@ public class ItemUseSubject extends ItemNoHold{
             if (roomChanger != null) {
                 roomChanger.enactChange();
             }
+
+            String soundEffectPlay=item.getSoundEffect();
+            if (soundEffect!=null){
+
+                NoiseMaker noiseMaker=new NoiseMaker(soundEffectPlay);
+                noiseMaker.startAudio();
+            }
             return useText;
         }
         return super.useItem(null);

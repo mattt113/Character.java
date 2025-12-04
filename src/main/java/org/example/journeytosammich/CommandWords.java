@@ -16,6 +16,7 @@ public class CommandWords {
         validCommands.put("drop","Cast and item from thine inventory unto the soil beneath");
         validCommands.put("cheats","Toggle cheats");
         validCommands.put("take","pick ip an item");
+        validCommands.put("use","uses the item");
     }
 
     public boolean isCommand(String commandWord) {

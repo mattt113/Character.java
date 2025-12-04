@@ -208,7 +208,6 @@ public class PlayerActions {
             for(int i=0;i<player.getInventory().size();i++){
                 contents=(contents+" a "+(player.getInventory().get(i).getName()));
             }
-
             if(!contents.isEmpty()) {
                 return "you have" + contents;
             }
@@ -219,20 +218,15 @@ public class PlayerActions {
         else if(inspectable.equals("room")){
             return player.getCurrentRoom().getLongDescription();
         }
-
-
         else{
             for(int i=0;i<player.checkAccess().size();i++){
                 Item item=player.checkAccess().get(i);
                 if (inspectable.equals(item.getName())){
                     return item.getName()+": "+item.getDescription();
-
-
                 }
             }
             return "That cannot be inspected";
         }
-
     }
 
     public String teleport(Command command) {
@@ -274,7 +268,6 @@ public class PlayerActions {
             item=player.checkAccess().get(i);
             if (itemUsed.equals(item.getName())){
                 Item tempItemInUse=itemInUse;
-    System.out.println(item.getName());
                 if((!player.getInventory().contains(itemInUse))&&(itemInUse instanceof ItemUseActivate)){
                     return "Item must be in inventory to be used";
                 }
@@ -282,9 +275,6 @@ public class PlayerActions {
                 if ((item instanceof ItemUseSubject)&&!(player.getCurrentRoom().getContents().contains(itemInUse))){
                     itemInUse=null;
                 }
-    System.out.println(tempItemInUse.getName());
-    System.out.println(tempItemInUse.getClass());
-    System.out.println(item.getClass());
                 return item.useItem(tempItemInUse);
             }
         }

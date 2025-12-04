@@ -66,6 +66,8 @@ public class Launcher {
                 return action.inspect(command);
             case "drop":
                 return action.dropItem(command);
+            case "use":
+                return action.useItem(command);
             case "quit":
                return ("not implemented-quit the normal way");
             case "take":
@@ -85,12 +87,8 @@ public class Launcher {
                 return action.listAvailableCommands(command);
             case "door":
                 return action.unlockDoor(command);
-            //case "":
-
             default:
                 return("I don't know what you mean...");
-
-
         }
     }
 
