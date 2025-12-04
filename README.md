@@ -8,7 +8,7 @@ console can also be used for controls. type help to view the consol's commaands
 
 type "cheats" in console to use cheats
 cheats are:
-"list" lists all the things a ginven command can be used for
+"list" lists all the things a given command can be used for
 "door" creates an exit to the specified room
 "make" makes the specified item
 "alterer" activates specified alterer.
