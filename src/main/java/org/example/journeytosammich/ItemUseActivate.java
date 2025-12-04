@@ -1,8 +1,7 @@
 package org.example.journeytosammich;
 
+// Activates room changer on iten used//can be used on other items
 public class ItemUseActivate extends ItemHoldable{
-
-
     public ItemUseActivate(String name, String description) {
         super(name, description);
     }

@@ -14,51 +14,49 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class GuiMaker extends Application {// implements EventHandler<ActionEvent> {
-    OptionButtons buttons;
-    ScrollPane inventoryScroll;
-    InventoryGraphic inventory;
-    PictureGraphic pictureMaker;
-    AnchorPane anchor;
-    HBox saveOptions;
-    TabPane graphic;
-    AnchorPane actions;
-    double width = 1500;
-    double height = 800;
-    private static Stage staticStage;
+    private ScrollPane inventoryScroll;
+    private HBox saveOptions;
+    private TabPane graphic;
+    private AnchorPane actions;
+    private double width = 1500;
+    private double height = 800;
+    private static Stage staticStage;//for closing game
 
+
+    // i reckon this is similar to the start in Thread
     @Override
     public void start(Stage stage) throws IOException {
         staticStage = stage;
-        Launcher game = new Launcher();
-        pictureMaker = new PictureGraphic(game, width, height);
-        buttons = new OptionButtons(game, pictureMaker, width, height);
-        inventory = new InventoryGraphic(buttons, game,pictureMaker);
+        Launcher game = new Launcher();//start backend
+
+        //make objects and make sure they contain each other as desired
+        PictureGraphic pictureMaker = new PictureGraphic(game, width, height);
+        //all the different bits. here largely for resizing anchor
+        OptionButtons buttons = new OptionButtons(game, pictureMaker, width, height);
+        InventoryGraphic inventory = new InventoryGraphic(buttons, game, pictureMaker);
         pictureMaker.addInventoryGraphic(inventory);
         inventoryScroll = inventory.addInventory();
-
         saveOptions = inventory.addSaveOptions();
         graphic = pictureMaker.addImage();
         buttons.initialize(inventory);
         actions = buttons.getButtons();
 
-        anchor = new AnchorPane(inventoryScroll, graphic, actions, saveOptions);
-        setSizes();
+        //contains every other node
+        AnchorPane anchor = new AnchorPane(inventoryScroll, graphic, actions, saveOptions);
+        setSizes();//does as it says
 
         NoiseMaker noiseMaker = new NoiseMaker("adventureline.wav",true);
-        noiseMaker.startAudio();
+        noiseMaker.startAudio();//this music won't get annoying
 
+        //goes in stage
         Scene scene = new Scene(anchor, width, height);
-        stage.setTitle("Hello World!");
+        stage.setTitle("Sammich");
 
         stage.setScene(scene);
-        stage.show();
-
-
-        width = scene.getWidth();
-
+        stage.show();//start game
     }
 
-
+//resizes everything
     public void setSizes() {
 
         AnchorPane.setTopAnchor(graphic, 0.0);
@@ -81,7 +79,7 @@ public class GuiMaker extends Application {// implements EventHandler<ActionEven
         AnchorPane.setTopAnchor(saveOptions, 0.0);
         AnchorPane.setLeftAnchor(saveOptions, ((width / 3) * 2));
     }
-
+    //does as described
     public static void endGame() {
         staticStage.close();
     }

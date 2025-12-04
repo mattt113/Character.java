@@ -1,5 +1,6 @@
 package org.example.journeytosammich;
 
+//Activates roomchanger on take. sorts for instanceof this class in pickup section of playerActions
 public class ItemTakeActivate extends ItemHoldable{
     private String takeDesc;
     public ItemTakeActivate(String name, String description,String reTakeDesc) {

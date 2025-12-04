@@ -13,20 +13,21 @@ import javafx.scene.control.ScrollPane;
 import java.util.ArrayList;
 
 public class InventoryGraphic {
-    private VBox vbox;
+    private VBox inventoryContainer;
     private Button currentButton,self,room;
     private OptionButtons controls;
     private Launcher game;
     private PictureGraphic pictureMaker;
-
     private ArrayList<Button> selfInventory=new ArrayList<Button>();
     private ArrayList<Button> roomInventory=new ArrayList<Button>();
+
+    //initialises above+makes self+room buttons
     public InventoryGraphic(OptionButtons reControls, Launcher regame, PictureGraphic rePictureMaker){
         game=regame;
         pictureMaker=rePictureMaker;
-        vbox = new VBox();
-        vbox.setPadding(new Insets(15, 12, 15, 12));
-        vbox.setSpacing(10);
+        inventoryContainer = new VBox();
+        inventoryContainer.setPadding(new Insets(15, 12, 15, 12));
+        inventoryContainer.setSpacing(10);
 
         //OptionButtons buttons=new OptionButtons();
         controls=reControls;
@@ -39,8 +40,6 @@ public class InventoryGraphic {
                 controls.setButtonsText(selfInventory,roomInventory,self);
                 currentButton=self;
             }
-
-
         });
 
         room = new Button("room");
@@ -53,12 +52,14 @@ public class InventoryGraphic {
                 currentButton=room;
             }
         });
-        vbox.getChildren().addAll(selfInventory);
+        inventoryContainer.getChildren().addAll(selfInventory);
 
-        vbox.getChildren().addAll(roomInventory);
+        inventoryContainer.getChildren().addAll(roomInventory);
 
         updateGraphic();
     }
+
+//    redoes the two inventories + updates graphics
     public void updateGraphic(){
         selfInventory.clear();
         roomInventory.clear();
@@ -73,37 +74,37 @@ public class InventoryGraphic {
             addButtonSelf(item.getName());
 
         }
-        ObservableList<Node> children=vbox.getChildren();
-        children.clear();
-        children.addAll(selfInventory);
-        children.addAll(roomInventory);
+        ObservableList<Node> buttons = inventoryContainer.getChildren();
+        buttons.clear();
+        buttons.addAll(selfInventory);
+        buttons.addAll(roomInventory);
     }
+//    puts inventory in a scroll pane
     public ScrollPane addInventory() {
-        ScrollPane scroller=new ScrollPane(vbox);
-
-
+        ScrollPane scroller=new ScrollPane(inventoryContainer);
         return scroller;
     }
 
-
+//    Makes button and add it to roomInventory
     public void addButtonRoom(String item){
         Button newButton=new Button(item);
         roomInventory.add(newButton);
 
         newButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
-            public void handle(ActionEvent event){
+            public void handle(ActionEvent event){      //  when pressed sets text (pick up/drop);
                 controls.setButtonsText(selfInventory,roomInventory,newButton);
-                currentButton=newButton;
+                currentButton=newButton;            //sets cyrrent button to this button
             }
         });
     }
+//    Makes button and adds it to self
     public void addButtonSelf(String item){
         Button newButton=new Button(item);
         selfInventory.add(newButton);
 
 
-        newButton.setOnAction(new EventHandler<ActionEvent>(){
+        newButton.setOnAction(new EventHandler<ActionEvent>(){//same as other one
             @Override
             public void handle(ActionEvent event){
                 controls.setButtonsText(selfInventory,roomInventory,newButton);
@@ -117,6 +118,7 @@ public class InventoryGraphic {
     public ArrayList<Button> getSelfInventory(){
         return selfInventory;
     }
+    //returns button currently in use
     public Button getCurrentButton(){
         return currentButton;
     }
@@ -148,7 +150,7 @@ public class InventoryGraphic {
         HBox hBox=new HBox(save,unsave,quit);
         hBox.setPadding(new Insets(1, 15, 0, 150));
         hBox.setSpacing(10);
-        hBox.setStyle("-fx-background-color: #339699;");
+        hBox.setStyle("-fx-background-color: #339699;");//colour (:
         return hBox;
     }
 }

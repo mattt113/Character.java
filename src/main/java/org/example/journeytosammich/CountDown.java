@@ -1,34 +1,26 @@
 package org.example.journeytosammich;
 
+//for specific instance: break mirror, countdown before it fixes itself
 public class CountDown extends Thread{
-    Character player;
-    AutoRoomAlterer mirrorReset;
-    Room damned;
-    long countFrom=30;
+    private AutoRoomAlterer mirrorReset;    //what to do when time's up
+    private long countFrom=30;
 
-
-    public CountDown(Character rePlayer,AutoRoomAlterer reMirrorReset){
-        player=rePlayer;
+    public CountDown(AutoRoomAlterer reMirrorReset){
         mirrorReset=reMirrorReset;
-
     }
-    public CountDown(Character rePlayer,AutoRoomAlterer reMirrorReset,Room reDamned,long countDownTime){
-        player=rePlayer;
+    public CountDown(AutoRoomAlterer reMirrorReset,long countDownTime){
         mirrorReset=reMirrorReset;
-        damned=reDamned;
+        countFrom=countDownTime;
     }
 
     @Override
-    public void run(){
+    public void run(){//wait and enact change
 
         try {
             Thread.sleep(countFrom*1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-//        if(player.getCurrentRoom().getName().equals("bedmirror")||player.getCurrentRoom().getName().equals("hell")){
-//            player.setCurrentRoom(damned);
-//        }
         mirrorReset.enactChange();
 
 

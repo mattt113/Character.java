@@ -12,6 +12,7 @@ public class Parser {
     public void nefariousCommandsActivator(){
         commands.addNefariousCommands();
     }
+
     public Command getCommand(String rawInputLine) {
         //System.out.print("> ");
         //String rawInputLine = reader.nextLine();

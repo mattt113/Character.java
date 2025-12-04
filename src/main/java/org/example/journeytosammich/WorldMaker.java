@@ -97,7 +97,7 @@ public class WorldMaker implements Serializable {
         ItemHoldable butter=new SandwichComponent("butter","the Butter");
         ItemHoldable bread=new SandwichComponent("bread","the bread of breadening");
 
-        Box<ItemHoldable> magicBox=new Box<>("magic box","a really cool magical box (I hate it.)",player);
+        Box<ItemHoldable> magicBox=new Box<>("magic box","a really cool magical box (I hate it.)",player,"you open the box");
 
 
         //make bed items
@@ -122,7 +122,6 @@ public class WorldMaker implements Serializable {
         AutoRoomAlterer telescopeInspect=new AutoRoomAlterer("telescope");
         telescopeInspect.addTeleport(player,space);
         ItemNoHold telescopeInspectable=new ItemInspectActivate(telescopeInspect,"telescope","a telescope turned to the heavens");
-
 
         ItemHoldable butterNet=new ItemUseActivate("net","a net of grabbing distant things");
         ItemNoHold butterSpace=new ItemUseSubject("butter","the butter is out of reach.","the butter is yoinked",butterNet);

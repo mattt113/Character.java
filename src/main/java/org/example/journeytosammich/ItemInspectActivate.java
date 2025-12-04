@@ -2,6 +2,7 @@ package org.example.journeytosammich;
 
 import java.io.Serializable;
 
+//activates room changer when inspected, through getDesc
 public class ItemInspectActivate extends ItemNoHold implements Serializable {
     AutoRoomAlterer roomChanger;
 

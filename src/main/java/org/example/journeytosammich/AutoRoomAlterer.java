@@ -1,10 +1,9 @@
 package org.example.journeytosammich;
 
-//import javafx.stage.Stage;
-
 import java.io.Serializable;
 import java.util.HashMap;
 
+//can change anything about any room from anywhere
 public class AutoRoomAlterer implements Serializable, Cheatable {
     private String name;
     private HashMap<Room,HashMap<String,Room>> exitToAdd;
@@ -31,17 +30,19 @@ public class AutoRoomAlterer implements Serializable, Cheatable {
     public void setName(String name) {
         this.name=name;
     }
-
+    //gets name (for cheats)
     public String getName(){
         return name;
     }
+
+    //changes room's desc
     public void addDescChanger(Room room,String desc){
         if(descChanger==null) {
             descChanger = new HashMap<>();
         }
         descChanger.put(room,desc);
     }
-
+    //add exit
     public void addThing(Room room, String name, Room newRoomExit){
         if(exitToAdd ==null) {
                exitToAdd =new HashMap<>();
@@ -55,54 +56,63 @@ public class AutoRoomAlterer implements Serializable, Cheatable {
             exitToAdd.get(room).putAll(exits);
         }
     }
+    //adds ItemNoHold to room
     public void addThing(Room room, ItemNoHold item){
         if (addItemsNoHold==null) {
             addItemsNoHold = new HashMap<>();
         }
         addItemsNoHold.put(item,room);
     }
+    //adds itemHoldable to room
     public void addThing(Room room, ItemHoldable item){
         if (addItemsHold==null) {
             addItemsHold = new HashMap<>();
         }
         addItemsHold.put(item,room);
     }
+    //alters a room's image
     public void addImageChange(Room room,String image){
         if(imageChanger==null){
             imageChanger=new HashMap<>();
         }
-
         imageChanger.put(room,image);
     }
 
-
+    //removes exit from room
     public void removeThing(Room room, String name){
         if(exitToRemove==null) {
             exitToRemove = new HashMap<>();
         }
         exitToRemove.put(room,name);
     }
+    //removes ItemNoHold from room
     public void removeThing(Room room,ItemNoHold item){
         if(removeItemsNoHold==null){
         removeItemsNoHold=new HashMap<>();
         }
         removeItemsNoHold.put(item,room);
     }
+    //removes ItemHoldable from player
     public void removeThing(Character rePlayer,ItemHoldable item){
        player=rePlayer;
         removeFromPlayer=item;
     }
+    //adds ItemHoldable to player
     public void addThing(Character rePlayer,ItemHoldable item){
         player=rePlayer;
         addToPlayer=item;
     }
+    //teleports player to new room
     public void addTeleport(Character replayer,Room room){
         player=replayer;
         teleportLocation=room;
     }
+    //ends game if true //remove in future
     public void endGame(boolean reEndGame) {
         endGame=reEndGame;
     }
+
+    //carries out all of above
     public void enactChange(){
         if(endGame){
             GuiMaker.endGame();

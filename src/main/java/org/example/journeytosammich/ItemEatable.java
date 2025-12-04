@@ -1,5 +1,6 @@
 package org.example.journeytosammich;
 
+//activates room changer when eaten, through getEatDesc
 public class ItemEatable extends ItemHoldable{
     protected String takeDesc;
     protected GameEnd gameEnd;

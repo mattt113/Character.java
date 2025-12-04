@@ -1,6 +1,8 @@
 package org.example.journeytosammich;
+
+//everything here is pretty simple.  just stores two strings
 public class Command {
-    private String commandWord;
+    private String commandWord;  //(firstWord)
     private String secondWord;
 
     public Command(String firstWord, String secondWord) {
@@ -16,6 +18,7 @@ public class Command {
         return secondWord;
     }
 
+    //i dont know what I'd use this for
     public boolean isUnknown() {
         return commandWord == null;
     }

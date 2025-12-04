@@ -2,11 +2,12 @@ package org.example.journeytosammich;
 
 import java.io.Serializable;
 
+//enum example, teleports player to one of three final rooms
 public class GameEnd implements Serializable {
     private Ending currentEnd;
     private Character player;
     private Room sandwich,sandwichDestroyed, dead;
-    enum Ending{
+    private enum Ending{        //token enum usage
         SANDWICH,
         NOSANDWICH,
         FUCKINGDEAD
@@ -14,7 +15,7 @@ public class GameEnd implements Serializable {
 
     public GameEnd(Character replayer,Room sandwichEaten,Room sandwichDropped, Room reDead){
         player=replayer;
-        sandwich=sandwichEaten;
+        sandwich=sandwichEaten;   //rooms
         sandwichDestroyed=sandwichDropped;
         dead=reDead;
     }
@@ -28,6 +29,8 @@ public class GameEnd implements Serializable {
     public void setEndFuckingDead(){
         currentEnd=Ending.FUCKINGDEAD;
     }
+
+    //which end is active?
     public void endGame(){
         switch (currentEnd){
             case SANDWICH:
