@@ -360,10 +360,6 @@ public class WorldMaker implements Serializable {
         altererList.add(tvFaceUse);
         altererList.add(resetMirror);
         altererList.add(guardShoot);
-
-
-        hungyBed.addItem(mirrorBreakable);
-        hungyBed.addItem(rock);
     }
 
     public void createIntroRooms(){
